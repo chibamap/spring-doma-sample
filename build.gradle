@@ -13,10 +13,19 @@ buildscript {
 	}
 }
 
+// doma gen config
+configurations {
+	domaGenRuntime
+}
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+
+// DOMA setup
+processResources.destinationDir = compileJava.destinationDir
+// コンパイルより前にSQLファイルを出力先ディレクトリにコピーするために依存関係を逆転する
+compileJava.dependsOn processResources
 
 
 version = '0.0.1-SNAPSHOT'
@@ -36,8 +45,33 @@ dependencies {
 	compile "org.seasar.doma:doma:${domaVersion}"
 	compile 'org.seasar.doma.boot:doma-spring-boot-starter:1.1.0'
 
+	// domaGen
+	domaGenRuntime "org.seasar.doma:doma-gen:${domaVersion}"
+	domaGenRuntime "mysql:mysql-connector-java:${mysqlJdbcVersion}"
+
 	compile 'org.projectlombok:lombok:1.16.16'
 
 	runtime('mysql:mysql-connector-java')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+// --------------------------------
+
+task domaGen << {
+	def rootPackageName  = 'sample.doma'
+	def dbUrl            = 'jdbc:mysql://0.0.0.0:3306/research'
+	def dbUser           = 'root'
+	def dbPassword       = 'password'
+
+	ant.taskdef(resource: 'domagentask.properties',
+			classpath: configurations.domaGenRuntime.asPath)
+	// @see http://doma-gen.readthedocs.io/ja/stable/gen/
+	ant.gen(
+			url: dbUrl, user: dbUser, password: dbPassword,
+			dialectName: 'mysql'
+	) {
+		entityConfig(packageName: "${rootPackageName}.entity")
+		daoConfig(packageName: "${rootPackageName}.dao")
+		sqlConfig()
+	}
 }
