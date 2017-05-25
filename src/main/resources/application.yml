@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:13306/research
+    url: jdbc:mysql://localhost:3306/research
     username: root
     password: password
 

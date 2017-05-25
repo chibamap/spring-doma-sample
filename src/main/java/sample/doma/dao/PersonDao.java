@@ -5,11 +5,16 @@ import org.seasar.doma.Delete;
 import org.seasar.doma.Insert;
 import org.seasar.doma.Select;
 import org.seasar.doma.Update;
+import org.seasar.doma.boot.ConfigAutowireable;
+import sample.doma.entity.Groups;
 import sample.doma.entity.Person;
+
+import java.util.List;
 
 /**
  */
 @Dao
+@ConfigAutowireable
 public interface PersonDao {
 
     /**
@@ -39,4 +44,7 @@ public interface PersonDao {
      */
     @Delete
     int delete(Person entity);
+
+    @Select
+    List<Person> findByGroup(Groups group);
 }
