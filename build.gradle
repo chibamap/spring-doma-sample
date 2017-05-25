@@ -1,0 +1,43 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.3.RELEASE'
+		mysqlJdbcVersion = '5.1.42'
+		domaVersion = "2.16.0"
+	}
+	repositories {
+		mavenCentral()
+
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	// spring-boot managed
+	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	compile('org.springframework.boot:spring-boot-starter-web')
+
+	// doma
+	compile "org.seasar.doma:doma:${domaVersion}"
+	compile 'org.seasar.doma.boot:doma-spring-boot-starter:1.1.0'
+
+	compile 'org.projectlombok:lombok:1.16.16'
+
+	runtime('mysql:mysql-connector-java')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
