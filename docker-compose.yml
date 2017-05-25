@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  mysql:
+    build: ./mysql
+    mem_limit: 1073741824
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/files/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/files/initialize.sql:/docker-entrypoint-initdb.d/initialize.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: 'research'
+    networks:
+      default:
+
