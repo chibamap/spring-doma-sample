@@ -14,7 +14,6 @@ import java.util.stream.IntStream;
  * Created by chibana on 2017/05/25.
  */
 @Service
-@Transactional
 public class DemoService {
     @Autowired
     PersonDao personDao;
@@ -28,6 +27,7 @@ public class DemoService {
     /**
      * roll back sample
      */
+    @Transactional
     public void rollbackTest() {
         this.insertPersons(0, 10);
 
@@ -35,7 +35,21 @@ public class DemoService {
         groupIdNotFound.setGroupId(5);
         groupIdNotFound.setFirstName("GroupId");
         groupIdNotFound.setLastName("NotFound");
-        // ここでFKEY例外でロールバック
+        // ここでFKEY例外でロールバックされる
+        personDao.insert(groupIdNotFound);
+    }
+
+     /**
+     * roll back sample
+     */
+    public void nonTxTest() {
+        this.insertPersons(0, 10);
+
+        Person groupIdNotFound = new Person();
+        groupIdNotFound.setGroupId(5);
+        groupIdNotFound.setFirstName("GroupId");
+        groupIdNotFound.setLastName("NotFound");
+        // ここでFKEY違反例外だけどロールバックされない
         personDao.insert(groupIdNotFound);
     }
 
@@ -45,6 +59,7 @@ public class DemoService {
      * @param from name index from
      * @param to name index to
      */
+    @Transactional
     public void batchInsert(int from, int to) {
         this.insertPersons(from, to);
     }
