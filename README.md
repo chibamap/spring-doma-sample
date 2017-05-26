@@ -70,3 +70,14 @@ curl -X PUT http://localhost:8080/person \
 curl -X DELETE http://localhost:8080/person/62
 ```
 
+### Validation
+
+- on-Request (Spring standard like struts)
+
+```$xslt
+curl -X POST http://localhost:8080/validate/request \
+ -H 'Content-type: application/json' \
+ -d '{ "firstName":"hoge","lastName": "rest", "groupId": 2} ' | jq .
+```
+
+
