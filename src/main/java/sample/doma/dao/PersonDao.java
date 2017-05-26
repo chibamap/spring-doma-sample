@@ -46,5 +46,11 @@ public interface PersonDao {
     int delete(Person entity);
 
     @Select
+    Person findById(Long id);
+
+    @Select
+    List<Person> findAll();
+
+    @Select
     List<Person> findByGroup(Groups group);
 }

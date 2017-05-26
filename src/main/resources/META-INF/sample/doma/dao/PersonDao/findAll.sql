@@ -1,0 +1,4 @@
+SELECT
+  /*%expand*/*
+from
+  person
