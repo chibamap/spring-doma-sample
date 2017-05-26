@@ -77,7 +77,14 @@ curl -X DELETE http://localhost:8080/person/62
 ```$xslt
 curl -X POST http://localhost:8080/validate/request \
  -H 'Content-type: application/json' \
- -d '{ "firstName":"hoge","lastName": "rest", "groupId": 2} ' | jq .
+ -d '{ "firstName":"hoge","lastName": "rest", "groupId": 5} ' | jq .
 ```
 
 
+- on service (Intercept on service)
+```$xslt
+curl -X POST http://localhost:8080/validate/service \
+ -H 'Content-type: application/json' \
+ -d '{ "firstName":"hoge","lastName": "rest", "groupId": 5} ' | jq .
+
+```
