@@ -12,6 +12,7 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.function.Consumer;
 
 import static java.lang.annotation.ElementType.*;
 
@@ -43,6 +44,9 @@ public @interface Fkey {
 
         @Override
         public boolean isValid(Object value, ConstraintValidatorContext context) {
+            if (null == value) {
+                return true;
+            }
             String query = String.format("select count(*) from %s where id = ?", tableName);
             int count = jdbcTemplate.queryForObject(query,
                     new Object[]{ value }, Integer.class);

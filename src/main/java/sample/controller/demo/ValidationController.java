@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import sample.doma.entity.Person;
 import sample.dto.Demo;
-import sample.service.PersonService;
+import sample.service.ValidationDemoService;
 
 import javax.validation.Valid;
 
@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class ValidationController {
 
     @Autowired
-    PersonService personService;
+    ValidationDemoService validationDemoService;
 
     /**
      * validate on request
@@ -29,10 +29,31 @@ public class ValidationController {
      * @param demo
      * @return
      */
-    @RequestMapping(value = "/on-req", method = RequestMethod.POST)
+    @RequestMapping(value = "/request", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Demo add(@Valid @RequestBody Demo demo) {
+    public Demo onRequest(@Valid @RequestBody Demo demo) {
+        // already clean data;
         return demo;
     }
+
+
+    /**
+     * validate on service
+     *
+     * @param demo
+     * @return
+     */
+    @RequestMapping(value = "/service", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Person onService(@RequestBody Demo demo) {
+        // here is dirty yet.
+        Person person = new Person();
+        person.setFirstName(demo.getFirstName());
+        person.setLastName(demo.getLastName());
+        person.setGroupId(demo.getGroupId());
+        validationDemoService.validateTest(person);
+        return person;
+    }
+
 
 }

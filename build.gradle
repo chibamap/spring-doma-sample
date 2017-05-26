@@ -40,6 +40,7 @@ dependencies {
 	// spring-boot managed
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile 'org.springframework.boot:spring-boot-starter-aop'
 
 	// doma
 	compile "org.seasar.doma:doma:${domaVersion}"
