@@ -1,4 +1,4 @@
-package sample.controller;
+package sample.controller.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,13 +26,19 @@ public class DemoController {
     }
 
 
-    @RequestMapping("rollback")
+    @RequestMapping("/rollback")
     public String rollback() {
         demoService.rollbackTest();
         return "rollback";
     }
 
-    @RequestMapping("commit")
+    @RequestMapping("/noTx")
+    public String noTx() {
+        demoService.nonTxTest();
+        return "nonTxTest";
+    }
+
+    @RequestMapping("/commit")
     public String commit(@RequestParam(value = "from", defaultValue="10") int from,
                            @RequestParam(value = "to", defaultValue = "20") int to) {
         demoService.batchInsert(from, to);
