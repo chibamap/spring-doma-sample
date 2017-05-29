@@ -11,7 +11,7 @@ gradle bootRun
 ```
 
 
-# sample api
+# Check examples
 
 ### Pick up piyo group people.
 
@@ -94,4 +94,18 @@ curl -X POST http://localhost:8080/validate/dao \
  -H 'Content-type: application/json' \
  -d '{ "firstName":"hoge","lastName": "rest", "groupId": 5} ' | jq .
 
+```
+
+### Datasource switch
+
+The groupDao uses slave config. so, group api returns slave connection values.
+Especially, master database has 3 groups. There ids are 1 to 3.
+But dummy slave database has only 2record. There ids are 1 and 2.
+
+So creating person record with group_id 3 will fail with validation error.
+That's not a database rejection.
+
+- The data-source switching check
+```
+curl http://localhost:8080/ds-demo/slave/2
 ```
