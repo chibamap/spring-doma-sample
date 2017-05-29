@@ -36,7 +36,6 @@ public class ValidationController {
         return demo;
     }
 
-
     /**
      * validate on service
      *
@@ -51,9 +50,26 @@ public class ValidationController {
         person.setFirstName(demo.getFirstName());
         person.setLastName(demo.getLastName());
         person.setGroupId(demo.getGroupId());
-        validationDemoService.validateTest(person);
+        validationDemoService.validateOnServiceIntercept(person);
         return person;
     }
 
-
+    /**
+     * validate on dao
+     *
+     * @param demo
+     * @return
+     */
+    @RequestMapping(value = "/dao", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Person onDao(@RequestBody Demo demo) {
+        // here is dirty yet.
+        Person person = new Person();
+        person.setFirstName(demo.getFirstName());
+        person.setLastName(demo.getLastName());
+        person.setGroupId(demo.getGroupId());
+        person = validationDemoService.validateWithDomaDomain(person);
+        // generated person(should be clean)
+        return person;
+    }
 }
