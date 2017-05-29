@@ -5,13 +5,20 @@ spring:
       url: jdbc:mysql://localhost:3306/research
       username: root
       password: password
+      minIdle: 3
+      initialSize: 4
+      maxIdle: 5
+      maxActive: 6
 
     slave:
       driver-class-name: com.mysql.jdbc.Driver
       url: jdbc:mysql://localhost:23306/research
       username: root
       password: password
-
+      minIdle: 7
+      initialSize: 8
+      maxIdle: 9
+      maxActive: 10
 
 doma:
   dialect: MYSQL
