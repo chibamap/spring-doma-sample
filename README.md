@@ -80,10 +80,17 @@ curl -X POST http://localhost:8080/validate/request \
  -d '{ "firstName":"hoge","lastName": "rest", "groupId": 5} ' | jq .
 ```
 
-
 - on service (Intercept on service)
 ```$xslt
 curl -X POST http://localhost:8080/validate/service \
+ -H 'Content-type: application/json' \
+ -d '{ "firstName":"hoge","lastName": "rest", "groupId": 5} ' | jq .
+
+```
+
+- on dao (Intercept on dao)
+```$xslt
+curl -X POST http://localhost:8080/validate/dao \
  -H 'Content-type: application/json' \
  -d '{ "firstName":"hoge","lastName": "rest", "groupId": 5} ' | jq .
 
