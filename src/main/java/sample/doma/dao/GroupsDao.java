@@ -2,11 +2,13 @@ package sample.doma.dao;
 
 import org.seasar.doma.*;
 import org.seasar.doma.boot.ConfigAutowireable;
+import sample.doma.config.UseSlave;
 import sample.doma.entity.Groups;
 
 /**
  */
 @Dao
+@UseSlave
 @ConfigAutowireable
 public interface GroupsDao {
 

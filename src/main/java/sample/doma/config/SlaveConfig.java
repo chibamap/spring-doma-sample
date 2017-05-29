@@ -9,10 +9,10 @@ import org.seasar.doma.jdbc.dialect.Dialect;
 import org.seasar.doma.jdbc.dialect.MysqlDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 /**
@@ -20,11 +20,11 @@ import javax.sql.DataSource;
  */
 @SingletonConfig
 @Component
-@Primary
-public class DomaConfig  implements Config {
+public class SlaveConfig implements Config {
 
-    private static final DomaConfig CONFIG = new DomaConfig();
-    private static final String DATASOURCE_NAME = "masterDataSource";
+    private static final SlaveConfig CONFIG = new SlaveConfig();
+
+    private static final String DATASOURCE_NAME = "slaveDataSource";
 
     private Dialect dialect;
 
@@ -32,13 +32,13 @@ public class DomaConfig  implements Config {
 
     private SqlFileRepository sqlFileRepository;
 
-    private DomaConfig() {
+    private SlaveConfig() {
         dialect = new MysqlDialect();
     }
 
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = new TransactionAwareDataSourceProxy(dataSource);
+    @Resource(name = "slaveDataSource")
+    public void setDataSource(DataSource slaveDataSource) {
+        this.dataSource = new TransactionAwareDataSourceProxy(slaveDataSource);
     }
 
     @Autowired
@@ -65,7 +65,7 @@ public class DomaConfig  implements Config {
         return dataSource;
     }
 
-    public static DomaConfig singleton() {
+    public static SlaveConfig singleton() {
         return CONFIG;
     }
 }
