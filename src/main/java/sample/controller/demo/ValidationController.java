@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import sample.doma.entity.Person;
 import sample.dto.Demo;
+import sample.dto.DomainDemo;
 import sample.service.ValidationDemoService;
 
 import javax.validation.Valid;
@@ -32,6 +33,19 @@ public class ValidationController {
     @RequestMapping(value = "/request", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public Demo onRequest(@Valid @RequestBody Demo demo) {
+        // already clean data;
+        return demo;
+    }
+
+    /**
+     * validate on request
+     *
+     * @param demo
+     * @return
+     */
+    @RequestMapping(value = "/request_with_domain", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public DomainDemo onRequestWithDomain(@Valid @RequestBody DomainDemo demo) {
         // already clean data;
         return demo;
     }
